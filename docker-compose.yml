@@ -7,9 +7,9 @@ services:
             - "3000:3000"
         environment:
             - NODE_ENV=production
-            - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/happy-server
+            - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-happy-server}
             - REDIS_URL=redis://redis:6379
-            - SEED=change-me-to-a-random-secret
+            - SEED=${SEED:-change-me-to-a-random-secret}
             - PORT=3000
         depends_on:
             - postgres
@@ -19,9 +19,9 @@ services:
     postgres:
         image: postgres:15
         environment:
-            - POSTGRES_DB=happy-server
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=${POSTGRES_DB:-happy-server}
+            - POSTGRES_USER=${POSTGRES_USER:-postgres}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
         ports:
             - "5432:5432"
         volumes:
